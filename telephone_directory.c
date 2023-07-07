@@ -3,6 +3,7 @@
 
 #define FILENAME_SIZE 1024
 #define MAX_LINE 2048
+int num = 0;
 
 struct telephone
 {
@@ -10,6 +11,7 @@ struct telephone
     char number[11];
 };
 
+// Function to insert spaces in the file
 void space(int len, FILE *file)
 {
     char c = ' ';
@@ -20,6 +22,7 @@ void space(int len, FILE *file)
     }
 }
 
+// Function to write a telephone entry to the file
 void write(struct telephone* input, FILE *file)
 {
     int len = strlen(input->name);
@@ -30,8 +33,12 @@ void write(struct telephone* input, FILE *file)
     fprintf(file, "%s\n", input->number);
 }
 
+// Function to insert a new entry in the telephone directory
 void insertEntry(FILE *file)
 {
+    static int number = 1;
+    printf("Entry number %d: \n",number);
+    
     fseek(file, 0, SEEK_END);
     struct telephone newentry;
     
@@ -43,10 +50,17 @@ void insertEntry(FILE *file)
     
     write(&newentry, file);
     printf("Entry inserted...\n");
+    number+=1;
 }
 
+// Function to update an existing entry in the telephone directory
 void updateEntry(FILE *file)
 {
+    if (num > 0)
+    {
+        printf("Give the entry number n-%d...\n",num - 1);
+    }
+    
     int entrynumber;
     printf("Enter the entry number to update: ");
     scanf("%d", &entrynumber);
@@ -70,6 +84,7 @@ void updateEntry(FILE *file)
     printf("Updated successfully...\n");
 }
 
+// Function to remove a specific line from the file
 void RemoveLineFromFile(FILE *file, int line_number)
 {
     FILE *temp_file = fopen("temp.txt", "w");
@@ -101,10 +116,10 @@ void RemoveLineFromFile(FILE *file, int line_number)
     printf("Entry deleted successfully.\n");
 }
 
+// Function to delete an entry from the telephone directory
 void deleteEntry()
 {
     int entrynumber;
-    static int num = 0;
     
     if (num > 0)
     {
@@ -176,5 +191,3 @@ int main()
         printf("\n");
     }
 }
-
-
