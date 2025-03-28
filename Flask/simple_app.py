@@ -12,7 +12,9 @@ CORS(app)  # Enable CORS for all routes
 # Load the model
 def load_model():
     try:
-        with open('simple_workout_model.pkl', 'rb') as f:
+        model_name = 'simple_workout_model.pkl'
+        model_path = os.path.join(os.getcwd(), model_name)
+        with open(model_path, 'rb') as f:
             model = pickle.load(f)
         print("Model loaded successfully!")
         return model
@@ -23,7 +25,9 @@ def load_model():
 # Load exercise data
 def load_exercise_data():
     try:
-        exercises = pd.read_csv('Top 50 Excerice for your body.csv')
+        data_name = 'Top 50 Excerice for your body.csv'
+        data_path = os.path.join(os.getcwd(), data_name)
+        exercises = pd.read_csv(data_path)
         print("Exercise data loaded successfully!")
         return exercises
     except Exception as e:
